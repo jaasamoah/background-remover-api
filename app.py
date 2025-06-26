@@ -3,7 +3,7 @@ from rembg import remove
 from PIL import Image
 from io import BytesIO
 
-app = Flask(__name__, template_folder="Templates")
+app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
