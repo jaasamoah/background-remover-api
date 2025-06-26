@@ -1,152 +1,80 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>✂️ Background Remover</title>
-  <style>
-    /* Basic reset to ensure consistent rendering */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
-    body {
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-      padding: 20px;
-    }
+<html>
+  <head>
+    <title>✂️ rmbg</title>
+    <style>
+      body {
+        height: 100vh;
+        display: flex;
 
-    .container {
-      width: 100%;
-      max-width: 600px;
-      padding: 2rem;
-      border-radius: 15px;
-      background: white;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    }
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
 
-    h1 {
-      color: #6c5ce7;
-      margin-bottom: 1.5rem;
-      text-align: center;
-    }
+      .drop-zone {
+        border: 2px dashed #ccc;
+        padding: 20px;
+        width: 80vw;
+        height: 80vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
 
-    .drop-zone {
-      border: 3px dashed #a29bfe;
-      border-radius: 10px;
-      padding: 3rem 2rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      min-height: 200px;
-    }
-
-    .drop-zone.dragover {
-      background-color: rgba(162, 155, 254, 0.1);
-    }
-
-    #fileInput {
-      display: none;
-    }
-
-    .upload-btn {
-      margin-top: 1.5rem;
-      padding: 0.8rem 2rem;
-      background: #6c5ce7;
-      color: white;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-    }
-
-    .instructions {
-      margin-top: 1rem;
-      color: #666;
-      text-align: center;
-    }
-  </style>
-</head>
-<body>
-  <!-- Debugging element - should always be visible -->
-  <div style="position: fixed; top: 10px; left: 10px; background: red; color: white; padding: 5px; z-index: 1000;" id="debug">
-    Debug: Script Loaded
-  </div>
-
-  <div class="container">
+      .drop-zone.dragover {
+        background-color: #f0f0f0;
+      }
+    </style>
+  </head>
+  <body>
     <div id="dropZone" class="drop-zone">
-      <h1>Background Remover</h1>
-      <p class="instructions">Drag & drop an image here or click to select</p>
-      <form id="uploadForm" action="/" method="post" enctype="multipart/form-data">
-        <input id="fileInput" type="file" name="file" accept="image/*">
-        <button type="submit" class="upload-btn">Remove Background</button>
+      <h1>rmbg</h1>
+      <form
+        id="uploadForm"
+        action="/"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <input id="fileInput" type="file" name="file" />
+        <input type="submit" value="rm" />
       </form>
     </div>
-  </div>
 
-  <script>
-    // Debugging check
-    console.log("Script is running");
-    document.getElementById('debug').textContent = 'Debug: Script Running';
-    
-    let dropZone = document.getElementById("dropZone");
-    let fileInput = document.getElementById("fileInput");
-    let uploadForm = document.getElementById("uploadForm");
+    <script>
+      let dropZone = document.getElementById("dropZone");
+      let fileInput = document.getElementById("fileInput");
+      let uploadForm = document.getElementById("uploadForm");
 
-    if (!dropZone || !fileInput || !uploadForm) {
-      document.getElementById('debug').textContent = 'Debug: Missing Elements';
-      throw new Error("Could not find required elements");
-    }
+      dropZone.addEventListener("click", function () {
+        fileInput.click();
+      });
 
-    dropZone.addEventListener("click", function() {
-      fileInput.click();
-    });
+      fileInput.addEventListener("change", function () {
+        if (fileInput.files.length > 0) {
+          uploadForm.submit();
+        }
+      });
 
-    fileInput.addEventListener("change", function() {
-      if (fileInput.files.length > 0) {
+      dropZone.addEventListener("dragover", function (e) {
+        this.classList.add("dragover");
+      });
+
+      dropZone.addEventListener("dragleave", function (e) {
+        this.classList.remove("dragover");
+      });
+
+      dropZone.addEventListener("drop", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.classList.remove("dragover");
+
+        let file = e.dataTransfer.files[0];
+        fileInput.files = e.dataTransfer.files;
         uploadForm.submit();
-      }
-    });
-
-    // Drag and drop handlers
-    function preventDefaults(e) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-
-    function highlight() {
-      dropZone.classList.add('dragover');
-    }
-
-    function unhighlight() {
-      dropZone.classList.remove('dragover');
-    }
-
-    ['dragenter', 'dragover'].forEach(eventName => {
-      dropZone.addEventListener(eventName, highlight);
-    });
-
-    ['dragleave', 'drop'].forEach(eventName => {
-      dropZone.addEventListener(eventName, unhighlight);
-    });
-
-    dropZone.addEventListener('drop', function(e) {
-      let files = e.dataTransfer.files;
-      fileInput.files = files;
-      if (files.length > 0) {
-        uploadForm.submit();
-      }
-    });
-
-    document.getElementById('debug').textContent = 'Debug: Setup Complete';
-  </script>
-</body>
+      });
+    </script>
+  </body>
 </html>
