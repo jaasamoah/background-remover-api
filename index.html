@@ -1,63 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>✂️ Background Remover</title>
   <style>
-    :root {
-      --primary: #6c5ce7;
-      --secondary: #a29bfe;
-      --light: #f8f9fa;
-      --dark: #343a40;
+    /* Basic reset to ensure consistent rendering */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
     
     body {
       height: 100vh;
-      margin: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      text-align: center;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      padding: 20px;
     }
 
     .container {
-      width: 90%;
+      width: 100%;
       max-width: 600px;
       padding: 2rem;
       border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
       background: white;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     }
 
     h1 {
-      color: var(--primary);
+      color: #6c5ce7;
       margin-bottom: 1.5rem;
-      font-size: 2.5rem;
+      text-align: center;
     }
 
     .drop-zone {
-      border: 3px dashed var(--secondary);
+      border: 3px dashed #a29bfe;
       border-radius: 10px;
       padding: 3rem 2rem;
-      width: 100%;
-      min-height: 300px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       transition: all 0.3s ease;
-      background-color: rgba(162, 155, 254, 0.05);
-    }
-
-    .drop-zone:hover {
-      background-color: rgba(162, 155, 254, 0.1);
+      min-height: 200px;
     }
 
     .drop-zone.dragover {
-      background-color: rgba(162, 155, 254, 0.2);
-      border-color: var(--primary);
+      background-color: rgba(162, 155, 254, 0.1);
     }
 
     #fileInput {
@@ -67,7 +61,92 @@
     .upload-btn {
       margin-top: 1.5rem;
       padding: 0.8rem 2rem;
-      background: var(--primary);
+      background: #6c5ce7;
       color: white;
       border: none;
-      border-radius
+      border-radius: 50px;
+      cursor: pointer;
+    }
+
+    .instructions {
+      margin-top: 1rem;
+      color: #666;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <!-- Debugging element - should always be visible -->
+  <div style="position: fixed; top: 10px; left: 10px; background: red; color: white; padding: 5px; z-index: 1000;" id="debug">
+    Debug: Script Loaded
+  </div>
+
+  <div class="container">
+    <div id="dropZone" class="drop-zone">
+      <h1>Background Remover</h1>
+      <p class="instructions">Drag & drop an image here or click to select</p>
+      <form id="uploadForm" action="/" method="post" enctype="multipart/form-data">
+        <input id="fileInput" type="file" name="file" accept="image/*">
+        <button type="submit" class="upload-btn">Remove Background</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Debugging check
+    console.log("Script is running");
+    document.getElementById('debug').textContent = 'Debug: Script Running';
+    
+    let dropZone = document.getElementById("dropZone");
+    let fileInput = document.getElementById("fileInput");
+    let uploadForm = document.getElementById("uploadForm");
+
+    if (!dropZone || !fileInput || !uploadForm) {
+      document.getElementById('debug').textContent = 'Debug: Missing Elements';
+      throw new Error("Could not find required elements");
+    }
+
+    dropZone.addEventListener("click", function() {
+      fileInput.click();
+    });
+
+    fileInput.addEventListener("change", function() {
+      if (fileInput.files.length > 0) {
+        uploadForm.submit();
+      }
+    });
+
+    // Drag and drop handlers
+    function preventDefaults(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    function highlight() {
+      dropZone.classList.add('dragover');
+    }
+
+    function unhighlight() {
+      dropZone.classList.remove('dragover');
+    }
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+      dropZone.addEventListener(eventName, highlight);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+      dropZone.addEventListener(eventName, unhighlight);
+    });
+
+    dropZone.addEventListener('drop', function(e) {
+      let files = e.dataTransfer.files;
+      fileInput.files = files;
+      if (files.length > 0) {
+        uploadForm.submit();
+      }
+    });
+
+    document.getElementById('debug').textContent = 'Debug: Setup Complete';
+  </script>
+</body>
+</html>
