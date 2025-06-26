@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>✂️ Background Remover</title>
+  <style>
+    :root {
+      --primary: #6c5ce7;
+      --secondary: #a29bfe;
+      --light: #f8f9fa;
+      --dark: #343a40;
+    }
+    
+    body {
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    }
+
+    .container {
+      width: 90%;
+      max-width: 600px;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      background: white;
+    }
+
+    h1 {
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      font-size: 2.5rem;
+    }
+
+    .drop-zone {
+      border: 3px dashed var(--secondary);
+      border-radius: 10px;
+      padding: 3rem 2rem;
+      width: 100%;
+      min-height: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background-color: rgba(162, 155, 254, 0.05);
+    }
+
+    .drop-zone:hover {
+      background-color: rgba(162, 155, 254, 0.1);
+    }
+
+    .drop-zone.dragover {
+      background-color: rgba(162, 155, 254, 0.2);
+      border-color: var(--primary);
+    }
+
+    #fileInput {
+      display: none;
+    }
+
+    .upload-btn {
+      margin-top: 1.5rem;
+      padding: 0.8rem 2rem;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius
