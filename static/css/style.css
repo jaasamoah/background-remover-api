@@ -1,0 +1,110 @@
+/* Custom styles for background remover */
+
+.upload-area {
+    border: 2px dashed var(--bs-border-color);
+    border-radius: 0.5rem;
+    padding: 3rem 2rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    background: var(--bs-body-bg);
+}
+
+.upload-area:hover {
+    border-color: var(--bs-primary);
+    background: var(--bs-primary-bg-subtle);
+}
+
+.upload-area.dragover {
+    border-color: var(--bs-primary);
+    background: var(--bs-primary-bg-subtle);
+    transform: scale(1.02);
+}
+
+.upload-content i {
+    color: var(--bs-primary);
+    opacity: 0.8;
+}
+
+.card {
+    background: var(--bs-body-bg);
+    border: 1px solid var(--bs-border-color);
+}
+
+#filePreview {
+    padding: 1rem;
+    border: 1px solid var(--bs-border-color);
+    border-radius: 0.375rem;
+    background: var(--bs-secondary-bg);
+}
+
+#previewImage {
+    max-height: 100px;
+    object-fit: cover;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, var(--bs-primary), var(--bs-info));
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(var(--bs-primary-rgb), 0.3);
+}
+
+.btn-primary:disabled {
+    background: var(--bs-secondary);
+    transform: none;
+    box-shadow: none;
+}
+
+/* Loading animation */
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.loading {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .upload-area {
+        padding: 2rem 1rem;
+    }
+    
+    .container {
+        padding: 0 1rem;
+    }
+    
+    header {
+        padding: 2rem 0 !important;
+    }
+    
+    .display-4 {
+        font-size: 2rem;
+    }
+}
+
+/* File validation styles */
+.file-error {
+    border-color: var(--bs-danger) !important;
+    background: var(--bs-danger-bg-subtle) !important;
+}
+
+.file-success {
+    border-color: var(--bs-success) !important;
+    background: var(--bs-success-bg-subtle) !important;
+}
