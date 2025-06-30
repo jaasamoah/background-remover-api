@@ -1,8 +1,8 @@
-# Background Remover API Documentation
+# Background Remover API
 
 ## Introduction
 
-The Background Remover API is a Flask-based web application hosted at [https://github.com/jaasamoah/background-remover-api.git](https://github.com/jaasamoah/background-remover-api.git). It allows users to upload images and remove their backgrounds using the `rembg` library. The processed image is returned as a downloadable PNG file. This documentation focuses on the `app.py` file, which serves as the core API, and includes code snippets to explain its key functionalities.
+The Background Remover API is a Flask-based web application that allows users to upload images and remove their backgrounds using the `rembg` library. The processed image is returned as a downloadable PNG file. This documentation focuses on the `app.py` file, which serves as the core API, and includes code snippets to explain its key functionalities.
 
 ## Flask App Setup
 
