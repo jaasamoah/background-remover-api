@@ -1,6 +1,3 @@
 flask
-gunicorn
 rembg
 pillow
-onnxruntime
-gdown
